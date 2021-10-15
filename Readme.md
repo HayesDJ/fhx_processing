@@ -10,10 +10,10 @@ Copy fhx_processing.py to a local directory.
 Create a folder named 'output' in the same directory as fhx_processing.py.  
 
 # Usage  
-Place a copy of a DeltaV FHX file in the same directory as fhx_processing.py and rename it 'DeltaV_In.fhx'. 
+Place a copy of a DeltaV FHX file in the same directory as fhx_processing.py and rename it 'DeltaV_In.fhx'.
 To execute, used the command line to navigate to the folder containing fhx_processing.py and type fhx_processing.py at the prompt.  
- 
-When run, the program will generate six files (placed in the 'output' folder): 
+
+When run, the program will generate six files (placed in the 'output' folder):
 - _classless_modles.csv  
 - _classless_modle_attrib.csv  
 - _module_class.csv  
@@ -21,8 +21,10 @@ When run, the program will generate six files (placed in the 'output' folder):
 - _module_class_inst.csv  
 - _module_class_inst_attrib.csv  
 
-These output files will be overwritte each time the program is run.
+These output files will be overwrite each time the program is run.
 
 # Contributing  
 # Credits  
 # License
+GPLv3  
+reference LICENCE file
