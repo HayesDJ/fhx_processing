@@ -7,7 +7,6 @@ fhx_processing.py is a program written in Python (ver 3.5) designed to processes
 # Installation  
 Execution requires Python 3.x installation.  
 Copy fhx_processing.py to a local directory.  
-Create a folder named 'output' in the same directory as fhx_processing.py.  
 
 # Usage  
 Place a copy of a DeltaV FHX file in the same directory as fhx_processing.py and rename it 'DeltaV_In.fhx'.

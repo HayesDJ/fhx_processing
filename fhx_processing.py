@@ -5,23 +5,26 @@ Processes a DeltaV FHX file to compile data to CSV files.
 """
 
 import csv
+import os
 
 def func_read_fhx(fhx_file_name):
     """ Reads a FHX file and returns a list. """
 
     fhx_list = []
-    
+
     with open(fhx_file_name, encoding='utf-16 LE') as dv_in_file:
         for dv_in_line in dv_in_file:
             fhx_list.append(dv_in_line.rstrip('\n'))
-        
+
     print("FHX file read complete")
     print()
     return fhx_list
-    
+
 
 def func_module_class(fhx_list, fhx_template_list):
     """ Searches for module class properties and writes to a CSV file. """
+    #Call func_module_class before the other file output functions
+    #func_module_class creates the 'output' folder if it does not exist.
 
     fhx_obj_list = []
 
@@ -49,7 +52,7 @@ def func_module_class(fhx_list, fhx_template_list):
             if read_active:
                 fhx_tmp_item_size = len(fhx_template_item)
                 prop_len = (fhx_tmp_item_size + 3)
-                
+
                 if fhx_line[2:prop_len] == fhx_template_item + "=":
                     temp_list = fhx_line.split('=')
                     temp_list_a.append(temp_list[1].strip('"'))
@@ -65,10 +68,12 @@ def func_module_class(fhx_list, fhx_template_list):
 
 
     #Write data to file
-    with open('output/_module_class.csv', 'w', newline='') as fhx_obj_csv:
+    filename = "output/_module_class.csv"
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, 'w', newline='') as fhx_obj_csv:
         writer = csv.writer(fhx_obj_csv)
         writer.writerows(fhx_obj_list)
-                        
+
     print('Module Classes written to file _module_class.csv')
     print()
 
@@ -87,7 +92,7 @@ def func_class_attrib(fhx_list, fhx_template_list):
     attrib_name = ""
 
     print("Processing FHX file for Module Class Attributes")
-    
+
     #Write header line
     fhx_obj_list.append(fhx_template_list)
 
@@ -97,13 +102,13 @@ def func_class_attrib(fhx_list, fhx_template_list):
             read_active = True
             temp_list = fhx_line.split('"')
             module_name = temp_list[1]
-            
+
         for fhx_template_item in fhx_template_list:
             #Check for attributes
             if read_active:
                 fhx_tmp_item_size = len(fhx_template_item)
                 prop_len = (fhx_tmp_item_size)
-                 
+
                 if fhx_line[2:prop_len + 2] == fhx_template_item:
                     temp_list = fhx_line.split('=')
                     attrib_name = temp_list[1].strip('"')
@@ -128,11 +133,11 @@ def func_class_attrib(fhx_list, fhx_template_list):
     with open('output/_module_class_attrib.csv', 'w', newline='') as fhx_obj_csv:
         writer = csv.writer(fhx_obj_csv)
         writer.writerows(fhx_obj_list)
-                        
+
     print('Module Class Attributes written to file _module_class_inst_attrib.csv')
     print()
-    
-    
+
+
 def func_module_instance(fhx_list, fhx_template_list):
     """ Searches for module class instance properties and writes to a CSV file. """
 
@@ -144,7 +149,7 @@ def func_module_instance(fhx_list, fhx_template_list):
     read_active = False
 
     print("Processing FHX file for Module Class Instances")
-    
+
     #Write header line
     fhx_obj_list.append(fhx_template_list)
 
@@ -164,7 +169,7 @@ def func_module_instance(fhx_list, fhx_template_list):
             if read_active:
                 fhx_tmp_item_size = len(fhx_template_item)
                 prop_len = (fhx_tmp_item_size + 3)
-                
+
                 if fhx_line[2:prop_len] == fhx_template_item + "=":
                     temp_list = fhx_line.split('=')
                     temp_list_a.append(temp_list[1].strip('"'))
@@ -183,11 +188,11 @@ def func_module_instance(fhx_list, fhx_template_list):
     with open('output/_module_class_inst.csv', 'w', newline='') as fhx_obj_csv:
         writer = csv.writer(fhx_obj_csv)
         writer.writerows(fhx_obj_list)
-                        
+
     print('Module Class Instances written to file _module_class_inst.csv')
     print()
-    
-    
+
+
 def func_instance_attrib(fhx_list, fhx_template_list):
     """ Searches for module class instance attributes and writes to a CSV file. """
 
@@ -202,7 +207,7 @@ def func_instance_attrib(fhx_list, fhx_template_list):
     attrib_name = ""
 
     print("Processing FHX file for Module Class Instance Attributes")
-    
+
     #Write header line
     fhx_obj_list.append(fhx_template_list)
 
@@ -212,13 +217,13 @@ def func_instance_attrib(fhx_list, fhx_template_list):
             read_active = True
             temp_list = fhx_line.split('"')
             module_name = temp_list[1]
-            
+
         for fhx_template_item in fhx_template_list:
             #Check for attributes
             if read_active:
                 fhx_tmp_item_size = len(fhx_template_item)
                 prop_len = (fhx_tmp_item_size)
-                 
+
                 if fhx_line[2:prop_len + 2] == fhx_template_item:
                     temp_list = fhx_line.split('=')
                     attrib_name = temp_list[1].strip('"')
@@ -243,11 +248,11 @@ def func_instance_attrib(fhx_list, fhx_template_list):
     with open('output/_module_class_inst_attrib.csv', 'w', newline='') as fhx_obj_csv:
         writer = csv.writer(fhx_obj_csv)
         writer.writerows(fhx_obj_list)
-                        
+
     print('Module Class Instance Attributes written to file _module_class_inst_attrib.csv')
     print()
 
-    
+
 def func_module(fhx_list, fhx_template_list):
     """ Searches for classless module properties and writes to a CSV file. """
 
@@ -278,7 +283,7 @@ def func_module(fhx_list, fhx_template_list):
             if read_active:
                 fhx_tmp_item_size = len(fhx_template_item)
                 prop_len = (fhx_tmp_item_size + 3)
-                
+
                 if fhx_line[2:prop_len] == fhx_template_item + "=":
                     temp_list = fhx_line.split('=')
                     temp_list_a.append(temp_list[1].strip('"'))
@@ -297,7 +302,7 @@ def func_module(fhx_list, fhx_template_list):
     with open('output/_classless_module.csv', 'w', newline='') as fhx_obj_csv:
         writer = csv.writer(fhx_obj_csv)
         writer.writerows(fhx_obj_list)
-                        
+
     print('Classless Modules written to file _classless_module.csv')
     print()
 
@@ -315,7 +320,7 @@ def func_mod_attrib(fhx_list, fhx_template_list):
     attrib_name = ""
 
     print("Processing FHX file for Class Module Attributes")
-    
+
     #Write header line
     fhx_obj_list.append(fhx_template_list)
 
@@ -325,13 +330,13 @@ def func_mod_attrib(fhx_list, fhx_template_list):
             read_active = True
             temp_list = fhx_line.split('"')
             module_name = temp_list[1]
-            
+
         for fhx_template_item in fhx_template_list:
             #Check for attributes
             if read_active:
                 fhx_tmp_item_size = len(fhx_template_item)
                 prop_len = (fhx_tmp_item_size)
-                 
+
                 if fhx_line[2:prop_len + 2] == fhx_template_item:
                     temp_list = fhx_line.split('=')
                     attrib_name = temp_list[1].strip('"')
@@ -356,13 +361,13 @@ def func_mod_attrib(fhx_list, fhx_template_list):
     with open('output/_classless_module_attrib.csv', 'w', newline='') as fhx_obj_csv:
         writer = csv.writer(fhx_obj_csv)
         writer.writerows(fhx_obj_list)
-                        
+
     print('Classless Module Attributes written to file _classless_module_attrib.csv')
     print()
 
 def main():
     fhx_list = []
-    
+
     FHX_FILE_NAME = 'DeltaV_In.fhx'
 
     # Module Class fields
@@ -382,7 +387,7 @@ def main():
     MC_ATTRIBUTES = ['MODULE_CLASS',
                      'ATTRIBUTE_INSTANCE',
                      'VALUE']
-    
+
 
     # Module Instance fields
     MI_FIELDS = ['MODULE_INSTANCE',
