@@ -13,18 +13,28 @@ def func_display_menu():
     print()
     print("Select option and press Enter")
     response = input("Press enter without an option to exit ")
+    print("response = ", response)
+
+    if response == str(1):
+        func_get_path()
+    elif response == str(2):
+        func_get_filename()
+    else:
+        pass
 
 def func_get_path():
-    pass
+    print("Get Path")
+    func_store_path()
 
 def func_store_path():
-    pass
+    print("Store Path")
 
 def func_get_filename():
-    pass
+    print("Get Filename")
+    func_store_filename()
 
 def func_store_filename():
-    pass
+    print("Store Filename")
 
 def func_display_current():
     pass
